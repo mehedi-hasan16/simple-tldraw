@@ -1,20 +1,45 @@
-import { StatusBar } from "expo-status-bar";
-import { StyleSheet, Text, View } from "react-native";
+import React from "react";
+import { StyleSheet, View } from "react-native";
+import { WebView } from "react-native-webview";
+import {
+  SafeAreaProvider,
+  useSafeAreaInsets,
+} from "react-native-safe-area-context";
 
-export default function App() {
+const TldrawScreen = () => {
+  const insets = useSafeAreaInsets();
+
   return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!!!!</Text>
-      <StatusBar style="auto" />
+    <View style={[styles.container, { paddingTop: insets.top }]}>
+      <WebView
+        source={{ uri: "https://tldraw.com" }}
+        style={styles.webview}
+        javaScriptEnabled
+        domStorageEnabled
+        allowsFullscreenVideo
+        allowsBackForwardNavigationGestures
+        startInLoadingState
+      />
     </View>
   );
-}
+};
+
+const App = () => {
+  return (
+    <SafeAreaProvider>
+      <TldrawScreen />
+    </SafeAreaProvider>
+  );
+};
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#fff",
-    alignItems: "center",
-    justifyContent: "center",
+    backgroundColor: "#fff", // Optional: Set background to white for better contrast
+  },
+  webview: {
+    flex: 1,
   },
 });
+
+export default App;
